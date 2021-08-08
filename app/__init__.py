@@ -15,6 +15,9 @@ migrate = Migrate(app, db)
 login = LoginManager(app)
 login.login_view = 'login'
 
+login.login_view ='login'
+login.login_message = " You cannot be here! Please login"
+login.login_message_category = "danger"
 
 
 from app import routes

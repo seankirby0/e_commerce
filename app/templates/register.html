@@ -2,4 +2,29 @@
 
 {% block content %}
 
+<h4>Register Here</h4>
+<form action="">
+    <div class="form-group">
+        <fieldset>
+            {{ form.username.label }}
+            {{form.username(class='from-control',placeholder='Username')}}
+        </fieldset>
+        <fieldset>
+            {{ form.email.label }}
+            {{form.email(class='from-control',placeholder='Email')}}
+        </fieldset>
+        <fieldset>
+            {{ form.password.label }}
+            {{form.password(class='from-control',placeholder='Password')}}
+        </fieldset>
+        <fieldset>
+            {{ form.confirm_pass.label }}
+            {{form.confirm_pass(class='from-control',placeholder='Confirm Password')}}
+        </fieldset>
+
+
+    </div>
+</form>
+
+
 {% endblock content %}
