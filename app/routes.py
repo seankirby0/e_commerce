@@ -1,6 +1,6 @@
 from werkzeug import datastructures
 from app import app, db
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request
 from app.forms import RegisterForm, LoginForm, CreateProduct
 from app.models import User, Product
 from flask_login import login_required, login_user, logout_user
@@ -13,8 +13,8 @@ def home_page():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    form = RegisterForm
-    if form.validate_on_submit():
+    form = RegisterForm()
+    if request.method == 'POST' and form.validate_on_submit():
         username = form.username.data
         email = form.email.data
         password = form.password.data
@@ -31,7 +31,7 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = LoginForm
+    form = LoginForm()
     if form.validate_on_submit():
         username = form.username.data
         password = form.password.data

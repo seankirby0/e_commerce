@@ -31,4 +31,5 @@ class Product(db.Model):
 
 class Cart(db.Model):
     id = db.Column(db.Integer,primary_key=True)
-    product_id = db.Column(db.Integer, db.ForeignKey('Product.id'))
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
