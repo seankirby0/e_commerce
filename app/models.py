@@ -27,3 +27,8 @@ class Product(db.Model):
     product_name = db.Column(db.String(50), nullable = False, unique = True)
     price = db.Column(db.Float(), nullable = False)
     image = db.Column(db.String)
+
+
+class Cart(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('Product.id'))

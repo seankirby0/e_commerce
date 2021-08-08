@@ -54,7 +54,7 @@ def login():
 def logout():
     logout_user()
     flash('You have successfully logged out', 'primary')
-    return redirect(url_for('index'))
+    return redirect(url_for('home_page'))
 
 
 @app.route('/create_product', methods=['GET', 'POST'])
@@ -75,9 +75,20 @@ def create_product():
 
     return render_template('create_product.html', form=form)
 
-@app.routes('/products')
+@app.route('/products', methods = ['GET', 'POST'])
 def products():
     my_products=Product.query.all()
 
 
     return render_template('products.html', products = my_products)
+
+
+@app.route('/cart', methods = ['GET', 'POST'])
+def cart():
+
+    db.session.add()
+    db.session.commit()
+
+    
+
+    return render_template('index.html')
