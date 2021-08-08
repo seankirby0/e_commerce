@@ -15,3 +15,11 @@ class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField()
+
+class CreateProduct(FlaskForm):
+    product_name = StringField('Product Name', validators=[DataRequired()])
+    price = StringField('Price', validators=[DataRequired()])
+    image = StringField('Image URL')
+    submit = SubmitField()
+
+
