@@ -1,7 +1,8 @@
+from werkzeug import datastructures
 from app import app, db
 from flask import render_template, flash, redirect, url_for
-from app.forms import RegisterForm, LoginForm
-from app.models import User
+from app.forms import RegisterForm, LoginForm, CreateProduct
+from app.models import User, Product
 from flask_login import login_required, login_user, logout_user
 
 @app.route('/')
@@ -55,3 +56,21 @@ def logout():
     flash('You have successfully logged out', 'primary')
     return redirect(url_for('index'))
 
+
+@app.route('/create_product' methods=['GET', 'POST'])
+def create_product():
+    form = CreateProduct()
+    if form.validate_on_submit():
+        product_name = form.product_name.data
+        price = form.price.data
+        image = form.image.data
+
+        new_product = Product(product_name, price, image)
+
+        db.session.add(new_product)
+        db.session.commit()
+
+        return redirect(url_for('home_page'))
+
+
+    return render_template('create_product.html', form = form)
