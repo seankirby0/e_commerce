@@ -6,15 +6,15 @@ from app.models import User, Product
 from flask_login import login_required, login_user, logout_user
 
 @app.route('/')
-def home_page():
-    # title = 'The Shop'
-    return "Welcome to The Shop"
+def home_page():  
 
-@app.route('/register' methods=['GET', 'POST'])
+    # title = 'The Shop'
+    return render_template('index.html')
+
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm
     if form.validate_on_submit():
-        print('THE FORM IS VALID!!!')
         username = form.username.data
         email = form.email.data
         password = form.password.data
@@ -27,9 +27,9 @@ def register():
         flash(f'Thank you for signing up {new_user.username}!', 'primary')
         return redirect(url_for('home_page'))
 
-    return render_template('register.html', title='Register for The Shop', form = form)
+    return render_template('register.html', title='Register for The Shop', form=form)
 
-@app.route('/login' methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm
     if form.validate_on_submit():
@@ -57,7 +57,7 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/create_product' methods=['GET', 'POST'])
+@app.route('/create_product', methods=['GET', 'POST'])
 def create_product():
     form = CreateProduct()
     if form.validate_on_submit():
@@ -73,4 +73,11 @@ def create_product():
         return redirect(url_for('home_page'))
 
 
-    return render_template('create_product.html', form = form)
+    return render_template('create_product.html', form=form)
+
+@app.routes('/products')
+def products():
+    my_products=Product.query.all()
+
+
+    return render_template('products.html', products = my_products)
