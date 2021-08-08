@@ -75,7 +75,7 @@ def create_product():
 
     return render_template('create_product.html', form=form)
 
-@app.routes('/products')
+@app.route('/products')
 def products():
     my_products=Product.query.all()
 
