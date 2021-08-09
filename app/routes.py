@@ -2,7 +2,7 @@ from werkzeug import datastructures
 from app import app, db
 from flask import render_template, flash, redirect, url_for, request
 from app.forms import RegisterForm, LoginForm, CreateProduct
-from app.models import User, Product
+from app.models import Cart, User, Product
 from flask_login import login_required, login_user, logout_user
 
 @app.route('/')
@@ -83,12 +83,32 @@ def products():
     return render_template('products.html', products = my_products)
 
 
-@app.route('/cart', methods = ['GET', 'POST'])
-def cart():
+@app.route('/add', methods=['POST'])
+def add_to_cart(product_id):
 
-    db.session.add()
+    product_name = Product.query.filter(Product.id == product_id)
+    cart_item = Cart(product=product_name)
+    db.session.add(cart_item)
     db.session.commit()
 
-    
+    return render_template('home.html', product=products)
 
-    return render_template('index.html')
+@app.route('/delete', methods = ['POST'])
+def delete_from_cart(product_id):
+
+    product_name = Product.query.filter(Product.id == product_id)
+    cart_item = Cart(product=product_name)
+    db.session.delete(cart_item)
+    db.session.commit()
+
+    return render_template('home.html', product=products)
+
+@app.route('/clear', methods = ['POST'])
+def clear_cart(product_id):
+
+    product_name = Product.query.filter(Product.id == product_id)
+    cart_item = Cart(product=product_name)
+    db.session.delete(cart_item)
+    db.session.commit()
+
+    return render_template('home.html', product=products)
