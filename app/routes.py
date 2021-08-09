@@ -1,6 +1,6 @@
 from werkzeug import datastructures
 from app import app, db
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request
 from app.forms import RegisterForm, LoginForm, CreateProduct
 from app.models import User, Product
 from flask_login import login_required, login_user, logout_user
@@ -13,8 +13,8 @@ def home_page():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    form = RegisterForm
-    if form.validate_on_submit():
+    form = RegisterForm()
+    if request.method == 'POST' and form.validate_on_submit():
         username = form.username.data
         email = form.email.data
         password = form.password.data
@@ -31,7 +31,7 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = LoginForm
+    form = LoginForm()
     if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
@@ -54,7 +54,7 @@ def login():
 def logout():
     logout_user()
     flash('You have successfully logged out', 'primary')
-    return redirect(url_for('index'))
+    return redirect(url_for('home_page'))
 
 
 @app.route('/create_product', methods=['GET', 'POST'])
@@ -75,9 +75,20 @@ def create_product():
 
     return render_template('create_product.html', form=form)
 
-@app.route('/products')
+@app.route('/products', methods = ['GET', 'POST'])
 def products():
     my_products=Product.query.all()
 
 
     return render_template('products.html', products = my_products)
+
+
+@app.route('/cart', methods = ['GET', 'POST'])
+def cart():
+
+    db.session.add()
+    db.session.commit()
+
+    
+
+    return render_template('index.html')
